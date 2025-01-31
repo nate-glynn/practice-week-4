@@ -20,6 +20,8 @@ blockchain = [
 # Write code below that returns the number of KelloggCoin that each user has in their 
 # KelloggCoin "wallet".
 
+
+
 # It should print out:
 # Ben's KelloggCoin balance is 14000
 # Brian's KelloggCoin balance is 13000
@@ -27,3 +29,33 @@ blockchain = [
 # Anthony's KelloggCoin balance is 2650
 
 # 👇👇👇 Your code HERE 👇👇👇
+
+#Creating the initial hash to store user balances
+
+balances = {}
+
+#loop to update balances of all users discovered in the transactions array
+
+blockchain.each do |transaction|
+  
+  #setting initial action variables
+  from = transaction["from_user"]
+  to = transaction["to_user"]
+  amount = transaction["amount"]
+
+  #updating recipient balances
+  balances[to] ||=0
+  balances[to] += amount
+
+  #update sender balance
+  if from 
+    balances[from] ||=0
+    balances[from] -= amount
+  end
+end
+
+#loop to output the balances of each user
+
+balances.each do |user, balance|
+  puts "#{user.capitalize}'s KelloggCoin balance is #{balance}"
+end
